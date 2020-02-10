@@ -854,7 +854,28 @@
             contentType : "application/json",
             dataType:   'text',
             async:      true,
-            data: {"id" : null,"email" : "mohamedamine.lamari@esprit.tn"},
+            data: {"email" : "mohamedamine.lamari@esprit.tn"},
+            success: function(data, status) {                
+                alert(data);
+            },
+            error : function(xhr, textStatus, errorThrown) {
+                console.log(errorThrown);
+                console.log(xhr);
+                alert('Ajax request failed.');
+            }
+        });
+    }
+
+    function sendMessage() {
+        var mail = "mohamedamine.lamari@esprit.tn";
+        var request = $.ajax({
+            url:        'http://localhost:8282/sendMessage',
+            crossDomain : true,
+            type:       'POST',
+            contentType : "application/json",
+            dataType:   'text',
+            async:      true,
+            data: {"id": null,"fullName": "mohamed amine","content": "test","sabject": "test","email": "mohamedamine.lamari@esprit.tn"},
             success: function(data, status) {                
                 alert(data);
             },
