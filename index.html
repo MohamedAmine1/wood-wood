@@ -911,7 +911,7 @@
             async:      true,
             data: JSON.stringify({"id" : null,"email" : "mohamedamine.lamari@esprit.tn"}),
             success: function(data, status) {
-                alert(JSON.parse(data));
+                alert(JSON.stringify(data));
             },
             error : function(xhr, textStatus, errorThrown) {
                 console.log(errorThrown);
