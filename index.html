@@ -905,14 +905,12 @@
         var request = $.ajax({
             url:        'http://localhost:8282/sinscrire',
             crossDomain : true,
-            contentType : "application/json",
             type:       'POST',
-            dataType:   'json',
+            dataType:   'text',
             async:      true,
             data: JSON.stringify({"id" : null,"email" : "mohamedamine.lamari@esprit.tn"}),
-            success: function(data, status) {
-                msg = data[0]
-                alert(msg['message']);
+            success: function(data, status) {                
+                alert(data);
             },
             error : function(xhr, textStatus, errorThrown) {
                 console.log(errorThrown);
