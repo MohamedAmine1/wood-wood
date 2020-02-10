@@ -224,27 +224,27 @@
                             
                             <!--Default Form-->
                             <div class="contact-form">
-                                <form method="post" action="sendemail.php" id="contact-form">
+                                <form id="contact-form">
                                     <div class="row clearfix">
                                         <!--Form Group-->
                                         <div class="form-group col-md-6 col-sm-6 col-xs-12">
-                                            <input type="text" name="firstname" value="" placeholder="First Name*" required>
+                                            <input type="text" name="firstname" id="fullName" value="" placeholder="Full Name*" required>
                                         </div>
                                         <!--Form Group-->
                                         <div class="form-group col-md-6 col-sm-6 col-xs-12">
-                                            <input type="text" name="lastname" value="" placeholder="Last Name*" required>
+                                            <input type="email" name="email" id="contact" value="" placeholder="Email*" required>
                                         </div>
                                         <!--Form Group-->
                                         <div class="form-group col-md-12 col-sm-12 col-xs-12">
-                                            <input type="email" name="email" value="" placeholder="Email*" required>
+                                            <input type="text" name="subkect" id="subject" value="" placeholder="Subject*" required>
                                         </div>
                                         <!--Form Group-->
                                         <div class="form-group col-md-12 col-sm-12 col-xs-12">
-                                            <textarea name="message" placeholder="Message*" ></textarea>
+                                            <textarea name="message" id="content" placeholder="Message*" ></textarea>
                                         </div>
                                         <!--Form Group-->
                                         <div class="form-group col-md-12 col-sm-12 col-xs-12">
-                                            <button type="submit" class="theme-btn btn-style-one">Envoyer un message</button>
+                                            <button type="button" onclick="sendMessage()" class="theme-btn btn-style-one">Envoyer un message</button>
                                         </div>
                                     </div>
                                 </form>
@@ -379,6 +379,36 @@
 <script src="http://maps.google.com/maps/api/js?key=AIzaSyBKS14AnP3HCIVlUpPKtGp7CbYuMtcXE2o"></script>
 <script src="js/map-script.js"></script>
 <!--End Google Map APi-->
+
+<script>
+    function sendMessage() {
+        fullName = $("#fullName").val();
+        email = $("#contact").val();
+        content = $("#content").val();
+        subject = $("#subject").val();
+        var request = $.ajax({
+            url:        'http://localhost:8282/sendMessage',
+            crossDomain : true,
+            type:       'POST',
+            contentType : "application/json",
+            dataType:   'text',
+            async:      true,
+            data: JSON.stringify({"fullName": fullName,"content": content,"subject": subject,"email": email}),
+            success: function(data, status) {                
+                alert(data);
+                $("#fullName").val("");
+                $("#contact").val("");
+                $("#content").val("");
+                $("#subject").val("");
+            },
+            error : function(xhr, textStatus, errorThrown) {
+                console.log(errorThrown);
+                console.log(xhr);
+                alert('Ajax request failed.');
+            }
+        });
+    }
+</script>
 
 </body>
 </html>

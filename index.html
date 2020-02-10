@@ -558,27 +558,27 @@
                     
                     <!--Default Form-->
                     <div class="default-form">
-                        <form method="post" action="contact.html">
+                        <form >
                         	<div class="row clearfix">
                                 <!--Form Group-->
                                 <div class="form-group col-md-6 col-sm-6 col-xs-12">
-                                    <input type="text" name="username" value="" placeholder="Username*" required>
+                                    <input type="text" id="fullName" name="username" value="" placeholder="Full Name*" required>
                                 </div>
                                 <!--Form Group-->
                                 <div class="form-group col-md-6 col-sm-6 col-xs-12">
-                                    <input type="email" name="email" value="" placeholder="Email Address*" required>
+                                    <input type="email" id="contact" name="email" value="" placeholder="Email Address*" required>
                                 </div>
                                 <!--Form Group-->
                                 <div class="form-group col-md-12 col-sm-12 col-xs-12">
-                                    <input type="text" name="subject" value="" placeholder="Subject*" required>
+                                    <input type="text" name="subject" id="subject" value="" placeholder="Subject*" required>
                                 </div>
                                 <!--Form Group-->
                                 <div class="form-group col-md-12 col-sm-12 col-xs-12">
-                                    <textarea name="message" placeholder="Message*" ></textarea>
+                                    <textarea name="message" id="content" placeholder="Message*" ></textarea>
                                 </div>
                                 <!--Form Group-->
                                 <div class="form-group col-md-12 col-sm-12 col-xs-12">
-                                    <button type="submit" class="theme-btn btn-style-one">envoyez un message</button>
+                                    <button type="button" class="theme-btn btn-style-one" onclick="sendMessage()">envoyez un message</button>
                                 </div>
                             </div>
                         </form>
@@ -846,7 +846,7 @@
 <script src="js/script.js"></script>
 <script>
     function sinscrire() {
-        var mail = $(".email").val();
+        mail = $("#email").val();
         var request = $.ajax({
             url:        'http://localhost:8282/sinscrire',
             crossDomain : true,
@@ -857,6 +857,7 @@
             data: JSON.stringify({"email" : mail}),
             success: function(data, status) {                
                 alert(data);
+                $("#email").val("");
             },
             error : function(xhr, textStatus, errorThrown) {
                 console.log(errorThrown);
@@ -868,7 +869,10 @@
     }
 
     function sendMessage() {
-        var mail = "mohamedamine.lamari@esprit.tn";
+        fullName = $("#fullName").val();
+        email = $("#contact").val();
+        content = $("#content").val();
+        subject = $("#subject").val();
         var request = $.ajax({
             url:        'http://localhost:8282/sendMessage',
             crossDomain : true,
@@ -876,9 +880,13 @@
             contentType : "application/json",
             dataType:   'text',
             async:      true,
-            data: {"id": null,"fullName": "mohamed amine","content": "test","sabject": "test","email": "mohamedamine.lamari@esprit.tn"},
+            data: JSON.stringify({"fullName": fullName,"content": content,"subject": subject,"email": email}),
             success: function(data, status) {                
                 alert(data);
+                $("#fullName").val("");
+                $("#contact").val("");
+                $("#content").val("");
+                $("#subject").val("");
             },
             error : function(xhr, textStatus, errorThrown) {
                 console.log(errorThrown);
