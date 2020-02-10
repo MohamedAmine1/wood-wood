@@ -901,7 +901,7 @@
 <script src="js/script.js"></script>
 <script>
     function sinscrire() {
-        mail = "mohamedamine.lamari@esprit.tn";
+        var mail = "mohamedamine.lamari@esprit.tn";
         var request = $.ajax({
             url:        'http://localhost:8282/sinscrire',
             crossDomain : true,
@@ -909,7 +909,7 @@
             type:       'POST',
             dataType:   'json',
             async:      true,
-            data: JSON.stringify({"id" : null,"email" : mail}),
+            data: {"id" : null,"email" : this.mail},
             success: function(data, status) {
                 msg = data[0]
                 alert(msg['message']);
