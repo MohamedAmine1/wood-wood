@@ -32,7 +32,7 @@
             	<div class="clearfix">
                 	
                 	<div class="pull-left logo-outer">
-                    	<div class="logo"><a href="index.html"><img src="images/logo.png" alt="" title=""></a></div>
+                    	<div class="logo"><a href="index.html"><img src="images/Logo-Wood-&-Wood.png" width="100" height="100" alt="" title=""></a></div>
                     </div>
                     
                     <div class="nav-outer clearfix">
@@ -92,7 +92,7 @@
         	<div class="auto-container clearfix">
             	<!--Logo-->
             	<div class="logo pull-left">
-                	<a href="index.html" class="img-responsive"><img src="images/logo-small.png" alt="" title=""></a>
+                	<a href="index.html" class="img-responsive"><img src="images/Logo-Wood-&-Wood.png" width="100" height="150" alt="" title=""></a>
                 </div>
                 
                 <!--Right Col-->
@@ -153,7 +153,9 @@
                 <ul>
                 	
                     <li data-transition="fade" data-slotamount="1" data-masterspeed="1000" data-thumb="images/main-slider/image-1.jpg"  data-saveperformance="off"  data-title="Awesome Title Here">
+
                     <img src="images/Banniére/02.png"  alt=""  data-bgposition="center top" data-bgfit="cover" data-bgrepeat="no-repeat"> 
+                    <img src="images/Banniére/01.png"  alt=""  data-bgposition="center top" data-bgfit="cover" data-bgrepeat="no-repeat"> 
                     
                     <div class="tp-caption sfl sfb tp-resizeme"
                     data-x="left" data-hoffset="15"
@@ -197,7 +199,9 @@
                     </li>
                     
                     <li data-transition="fade" data-slotamount="1" data-masterspeed="1000" data-thumb="images/main-slider/image-2.jpg"  data-saveperformance="off"  data-title="Awesome Title Here">
+
                     <img src="images/Banniére/01.png"  alt=""  data-bgposition="center top" data-bgfit="cover" data-bgrepeat="no-repeat"> 
+                    <img src="images/Banniére/02.png"  alt=""  data-bgposition="center top" data-bgfit="cover" data-bgrepeat="no-repeat"> 
                     
                     <div class="tp-caption sfl sfb tp-resizeme"
                     data-x="left" data-hoffset="15"
@@ -572,27 +576,27 @@
                     
                     <!--Default Form-->
                     <div class="default-form">
-                        <form method="post" action="contact.html">
+                        <form >
                         	<div class="row clearfix">
                                 <!--Form Group-->
                                 <div class="form-group col-md-6 col-sm-6 col-xs-12">
-                                    <input type="text" name="username" value="" placeholder="Username*" required>
+                                    <input type="text" id="fullName" name="username" value="" placeholder="Full Name*" required>
                                 </div>
                                 <!--Form Group-->
                                 <div class="form-group col-md-6 col-sm-6 col-xs-12">
-                                    <input type="email" name="email" value="" placeholder="Email Address*" required>
+                                    <input type="email" id="contact" name="email" value="" placeholder="Email Address*" required>
                                 </div>
                                 <!--Form Group-->
                                 <div class="form-group col-md-12 col-sm-12 col-xs-12">
-                                    <input type="text" name="subject" value="" placeholder="Subject*" required>
+                                    <input type="text" name="subject" id="subject" value="" placeholder="Subject*" required>
                                 </div>
                                 <!--Form Group-->
                                 <div class="form-group col-md-12 col-sm-12 col-xs-12">
-                                    <textarea name="message" placeholder="Message*" ></textarea>
+                                    <textarea name="message" id="content" placeholder="Message*" ></textarea>
                                 </div>
                                 <!--Form Group-->
                                 <div class="form-group col-md-12 col-sm-12 col-xs-12">
-                                    <button type="submit" class="theme-btn btn-style-one">envoyez un message</button>
+                                    <button type="button" class="theme-btn btn-style-one" onclick="sendMessage()">envoyez un message</button>
                                 </div>
                             </div>
                         </form>
@@ -760,7 +764,7 @@
                                     <div class="emailed-form">
                                         <form >
                                             <div class="form-group">
-                                                <input type="email" name="email" id="mail" value="" placeholder="Enter Your Email" required>
+                                                <input type="email" name="email" id="email" value="" placeholder="Enter Your Email" required>
                                                 <button type="button" class="theme-btn" onclick="sinscrire()"><span class="fa fa-angle-right"></span></button>
                                             </div>
                                         </form>
@@ -860,7 +864,7 @@
 <script src="js/script.js"></script>
 <script>
     function sinscrire() {
-        var mail = "mohamedamine.lamari@esprit.tn";
+        mail = $("#email").val();
         var request = $.ajax({
             url:        'http://localhost:8282/sinscrire',
             crossDomain : true,
@@ -868,9 +872,39 @@
             contentType : "application/json",
             dataType:   'text',
             async:      true,
-            data: {"id" : null,"email" : "mohamedamine.lamari@esprit.tn"},
+            data: JSON.stringify({"email" : mail}),
             success: function(data, status) {                
                 alert(data);
+                $("#email").val("");
+            },
+            error : function(xhr, textStatus, errorThrown) {
+                console.log(errorThrown);
+                console.log(xhr);
+                console.log(textStatus);
+                alert('Ajax request failed.');
+            }
+        });
+    }
+
+    function sendMessage() {
+        fullName = $("#fullName").val();
+        email = $("#contact").val();
+        content = $("#content").val();
+        subject = $("#subject").val();
+        var request = $.ajax({
+            url:        'http://localhost:8282/sendMessage',
+            crossDomain : true,
+            type:       'POST',
+            contentType : "application/json",
+            dataType:   'text',
+            async:      true,
+            data: JSON.stringify({"fullName": fullName,"content": content,"subject": subject,"email": email}),
+            success: function(data, status) {                
+                alert(data);
+                $("#fullName").val("");
+                $("#contact").val("");
+                $("#content").val("");
+                $("#subject").val("");
             },
             error : function(xhr, textStatus, errorThrown) {
                 console.log(errorThrown);
