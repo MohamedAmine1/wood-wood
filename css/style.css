@@ -704,6 +704,7 @@ img{
 
 .main-menu .navbar-collapse > ul li.dropdown .dropdown-btn{
 	position:absolute;
+	
 	right:10px;
 	top:8px;
 	width:34px;
@@ -822,10 +823,14 @@ img{
 	padding-right:15px;
 }
 
+
 .header-type-one .main-menu .navigation > li.current > a,
 .header-type-one .main-menu .navigation > li:hover > a{
 	color:#d68112;
 	background:none;
+}
+.header-type-one .main-menu .navigation > li > a:hover{
+	padding-right:15px;
 }
 
 .header-type-one .search-box-outer{
@@ -2432,7 +2437,6 @@ img{
 
 .client-section .sponsors-outer .image-box img{
 	max-width:100%;
-	opacity:0.2;
 	display:inline-block;
 }
 
